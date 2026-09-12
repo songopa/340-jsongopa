@@ -18,6 +18,10 @@ const app = express();
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
+app.use((req, res, next) => {
+    res.locals.currentPath = req.path;
+    next();
+});
 
 // Set EJS as the templating engine
 app.set('view engine', 'ejs');
@@ -42,6 +46,11 @@ app.get('/organizations', async (req, res) => {
 app.get('/projects', async (req, res) => {
     const title = 'Service Projects';
     res.render('projects', { title });
+});
+
+app.get('/categories', async (req, res) => {
+    const title = 'Categories';
+    res.render('categories', { title });
 });
 
 

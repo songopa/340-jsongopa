@@ -13,8 +13,9 @@
 <body>
     <nav>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/organizations">Organizations</a></li>
-            <li><a href="/projects">Projects</a></li>
+            <li><a href="/" class="<%= currentPath === '/' ? 'active' : '' %>" <%= currentPath === '/' ? 'aria-current="page"' : '' %>>Home</a></li>
+            <li><a href="/organizations" class="<%= currentPath === '/organizations' ? 'active' : '' %>" <%= currentPath === '/organizations' ? 'aria-current="page"' : '' %>>Organizations</a></li>
+            <li><a href="/projects" class="<%= currentPath === '/projects' ? 'active' : '' %>" <%= currentPath === '/projects' ? 'aria-current="page"' : '' %>>Projects</a></li>
+            <li><a href="/categories" class="<%= currentPath === '/categories' ? 'active' : '' %>" <%= currentPath === '/categories' ? 'aria-current="page"' : '' %>>Categories</a></li>
         </ul>
     </nav>
