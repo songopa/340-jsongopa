@@ -1,17 +1,21 @@
 <%- include('partials/header') %>
-    <main>
-        <h1>
-            <%= title %>
-        </h1>
-        <!-- Put your page-specific content here -->
-        <h2>Various Categories for Projects</h2>
-        <!-- Add buttons for categories here-->
+    <main class="content-page">
+        <section class="page-intro" aria-labelledby="categories-heading">
+            <p class="eyebrow">Find your fit</p>
+            <h1 id="categories-heading"><%= title %></h1>
+            <p class="intro-copy">Explore service opportunities by the kind of impact you want to make.</p>
+        </section>
+        <section aria-labelledby="category-heading">
+            <div class="section-heading">
+                <h2 id="category-heading">Browse by focus</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+
          <div class="category-buttons">
-            <button class="category-button">Environmental</button>
-            <button class="category-button">Educational</button>
-            <button class="category-button">Community Service</button>
-            <button class="category-button">Health and Wellness</button>
+            <% categories.forEach((category) => { %>
+                <button class="category-button" type="button"><%= category.name %></button>
+            <% }); %>
         </div>
-        
+        </section>
     </main>
     <%- include('partials/footer') %>

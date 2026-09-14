@@ -1,17 +1,33 @@
 <%- include('partials/header') %>
-    <main>
-        <h1>
-            <%= title %>
-        </h1>
-        <!-- Put your page-specific content here -->
-        <p>Here are a few of our partner organizations:</p>
-        <ul>
-            <li><img src="/images/brightfuture-logo.png" alt="BrightFuture Builders logo"><strong>BrightFuture
-                    Builders</strong>: info@brightfuture.org</li>
-            <li><img src="/images/greenharvest-logo.png" alt="GreenHarvest Growers logo"><strong>GreenHarvest Growers</strong>:
-                contact@greenharvest.org</li>
-            <li><img src="/images/unityserve-logo.png" alt="UnityServe Volunteers logo"><strong>UnityServe Volunteers</strong>:
-                hello@unityserve.org</li>
-        </ul>
+    <main class="content-page">
+        <section class="page-intro" aria-labelledby="organizations-heading">
+            <p class="eyebrow">People powering local change</p>
+            <h1 id="organizations-heading"><%= title %></h1>
+            <p class="intro-copy">Meet the partner organizations creating opportunities for volunteers to serve with purpose.</p>
+        </section>
+        <section aria-labelledby="partners-heading">
+            <div class="section-heading">
+                <h2 id="partners-heading">Our partners</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </div>
+            <ul class="content-list">
+            <% organizations.forEach(org => { %>
+                <li class="content-card content-card--organization">
+                    <img class="content-image" src="/images/<%= org.logo_filename %>" alt="<%= org.name %> logo">
+                    <div>
+                        <span class="content-label">Partner organization</span>
+                        <h3><%= org.name %></h3>
+                        <p><%= org.description %></p>
+                        <dl class="content-details">
+                            <div>
+                                <dt>Contact</dt>
+                                <dd><%= org.contact_email %></dd>
+                            </div>
+                        </dl>
+                    </div>
+                </li>
+                <% }); %>
+            </ul>
+        </section>
     </main>
     <%- include('partials/footer') %>
