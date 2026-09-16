@@ -160,9 +160,9 @@ CREATE TABLE IF NOT EXISTS categories (
 
 
 CREATE TABLE IF NOT EXISTS projects_categories (
-    project_id INTEGER NOT NULL
+    project_id INTEGER NOT NULL FOREIGN KEY
         REFERENCES projects(project_id) ON DELETE CASCADE,
-    category_id INTEGER NOT NULL
+    category_id INTEGER NOT NULL FOREIGN KEY
         REFERENCES categories(category_id) ON DELETE CASCADE,
     PRIMARY KEY (project_id, category_id)
 );
