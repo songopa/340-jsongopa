@@ -313,10 +313,12 @@ a:focus-visible {
 }
 
 footer {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 2rem;
     color: #e9f3f3;
     background: var(--navy);
     text-align: center;
+    display: flex;
+    justify-content: space-between;
 }
 
 footer p {
@@ -325,6 +327,7 @@ footer p {
     color: inherit;
     font-size: 0.9rem;
 }
+
 
 @media (max-width: 42rem) {
     nav ul {

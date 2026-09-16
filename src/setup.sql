@@ -31,7 +31,7 @@ VALUES
 
 CREATE TABLE IF NOT EXISTS projects (
     project_id SERIAL PRIMARY KEY,
-    organization_id INTEGER NOT NULL
+    organization_id INTEGER NOT NULL FOREIGN KEY
         REFERENCES organizations(organization_id) ON DELETE CASCADE,
     title VARCHAR(150) NOT NULL,
     description TEXT NOT NULL,
