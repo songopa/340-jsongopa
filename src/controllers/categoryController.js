@@ -1,4 +1,5 @@
-import {getCategories} from '../models/categories.js';
+import {getCategories, getCategoryById} from '../models/categories.js';
+import {getProjectsByCategoryId} from '../models/projects.js';
 
 const showCategoriesPage = async (req, res) => {
     try {
@@ -11,4 +12,17 @@ const showCategoriesPage = async (req, res) => {
     }
 };
 
-export { showCategoriesPage };
+const showCategoryDetailsPage = async (req, res) => {
+    const categoryId = req.params.id;
+    try {
+        const category = await getCategoryById(categoryId);
+        const projects = await getProjectsByCategoryId(categoryId);
+        const title = category.name;
+        res.render('category', { title, category, projects });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+export { showCategoriesPage, showCategoryDetailsPage };

@@ -10,4 +10,15 @@ const getCategories = async () => {
     return result.rows;
 }
 
-export { getCategories };
+const getCategoryById = async (categoryId) => {
+    const query = `
+    SELECT category_id, name
+    FROM public.categories
+    WHERE category_id = $1;
+    `;
+
+    const result = await db.query(query, [categoryId]);
+    return result.rows[0];
+}
+
+export { getCategories, getCategoryById };

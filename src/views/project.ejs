@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+    <main class="content-page project-page">
+        <section class="page-intro" aria-labelledby="project-heading">
+            <p class="eyebrow">Service project</p>
+            <h1 id="project-heading"><%= project.title %></h1>
+            <p class="intro-copy"><%= project.description %></p>
+            <div>
+                <dt>
+                    <span class="content-label">Location</span>
+                    <dd><%= project.location %></dd>
+                </dt>
+                <dt>
+                    <span class="content-label">Date</span>
+                    <dd><%= project.project_date.toDateString() %></dd>
+                </dt>
+                <dt>
+                    <span class="content-label">Partner Organization</span>
+                    <dd>
+                        <a href="/organization/<%= project.organization_id %>" class="btn btn--secondary">
+                            <%= project.organization_name %>
+                        </a>
+                    </dd>
+                </dt>
+            </div>
+            <div>
+                <dt>
+                    <span class="content-label">Categories</span>
+                    <dd>
+                        <% if (categories.length > 0) { %>
+                            <% categories.forEach(category => { %>
+                                <a href="/category/<%= category.category_id %>" class="btn btn--secondary">
+                                    <%= category.name %>
+                                </a>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="empty-state">This project does not have any categories listed yet.</p>
+                        <% } %>
+                    </dd>
+                </dt>
+            </div>
+        </section>
+    </main>
+    <%- include('partials/footer') %>

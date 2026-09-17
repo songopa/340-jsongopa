@@ -6,38 +6,43 @@
         </section>
 
         <section aria-labelledby="upcoming-heading">
-            <div class="section-heading">
+            <!-- <div class="section-heading">
                 <h2 id="upcoming-heading">Upcoming opportunities</h2>
                 <span class="section-rule" aria-hidden="true"></span>
-            </div>
+            </div> -->
 
             <% if (projects.length > 0) { %>
-                <ul class="content-list">
-                    <% projects.forEach(project => { %>
-                        <li class="content-card">
-                            <div class="content-card__topline">
-                                <span class="content-label">Service project</span>
-                                <span class="content-number" aria-hidden="true"><%= String(project.project_id).padStart(2, '0') %></span>
-                            </div>
-                            <h3><%= project.title %></h3>
-                            <p><%= project.description %></p>
-                            <dl class="content-details">
-                                <div>
-                                    <dt>Organization</dt>
-                                    <dd><%= project.organization_name %></dd>
-                                </div>
-                                <div>
-                                    <dt>Where</dt>
-                                    <dd><%= project.location %></dd>
-                                </div>
-                                <div>
-                                    <dt>When</dt>
-                                    <dd><%= project.project_date.toDateString() %></dd>
-                                </div>
-                            </dl>
-                        </li>
-                    <% }); %>
-                </ul>
+                <div class="table-wrapper">
+                    <table class="data-table project-table">
+                        <caption class="visually-hidden">Upcoming service projects</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Project</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Organization</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% projects.forEach((project, index) => { %>
+                                <tr>
+                                    <td data-label="ID"><%= index + 1 %></td>
+                                    <th scope="row" data-label="Project">
+                                        <a href="/project/<%= project.project_id %>"><%= project.title %></a>
+                                    </th>
+                                    <td data-label="Description"><%= project.description %></td>
+                                    <td data-label="Organization">
+                                        <a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a>
+                                    </td>
+                                    <td data-label="Location"><%= project.location %></td>
+                                    <td data-label="Date"><%= project.project_date.toDateString() %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
             <% } else { %>
                 <p class="empty-state">There are no upcoming projects listed right now. Please check back soon for new ways to serve.</p>
             <% } %>

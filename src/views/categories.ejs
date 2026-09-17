@@ -7,15 +7,33 @@
         </section>
         <section aria-labelledby="category-heading">
             <div class="section-heading">
-                <h2 id="category-heading">Browse by focus</h2>
+                <!-- <h2 id="category-heading">Browse by focus</h2> -->
                 <span class="section-rule" aria-hidden="true"></span>
             </div>
 
-         <div class="category-buttons">
-            <% categories.forEach((category) => { %>
-                <button class="category-button" type="button"><%= category.name %></button>
-            <% }); %>
-        </div>
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <caption class="visually-hidden">Available service project categories</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Selection</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% categories.forEach((category, index) => { %>
+                            <tr>
+                                <td data-label="ID"><%= index + 1 %></td>
+                                <th scope="row" data-label="Category"><%= category.name %></th>
+                                <td data-label="Selection">
+                                    <a class="btn btn-primary" href="/category/<%= category.category_id %>">View Projects</a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
     <%- include('partials/footer') %>

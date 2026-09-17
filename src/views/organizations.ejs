@@ -7,7 +7,7 @@
         </section>
         <section aria-labelledby="partners-heading">
             <div class="section-heading">
-                <h2 id="partners-heading">Our partners</h2>
+                <!-- <h2 id="partners-heading">Our partners</h2> -->
                 <span class="section-rule" aria-hidden="true"></span>
             </div>
             <ul class="content-list">
@@ -15,13 +15,17 @@
                 <li class="content-card content-card--organization">
                     <img class="content-image" src="/images/<%= org.logo_filename %>" alt="<%= org.name %> logo">
                     <div>
-                        <span class="content-label">Partner organization</span>
-                        <h3><%= org.name %></h3>
+                        <h3>
+                            <a href="/organization/<%= org.organization_id %>" ><%= org.name %></a>
+                        </h3>
                         <p><%= org.description %></p>
                         <dl class="content-details">
                             <div>
                                 <dt>Contact</dt>
                                 <dd><%= org.contact_email %></dd>
+                            </div>
+                            <div>
+                                
                             </div>
                         </dl>
                     </div>

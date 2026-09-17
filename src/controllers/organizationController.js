@@ -1,4 +1,5 @@
-import {getOrganizations} from '../models/organizations.js';
+import {getOrganizations, getOrganization} from '../models/organizations.js';
+import {getProjectsByOrganizationId} from '../models/projects.js';
 
 const showOrganizationsPage = async (req, res) => {
     try {
@@ -12,4 +13,17 @@ const showOrganizationsPage = async (req, res) => {
     }
 };
 
-export {showOrganizationsPage};
+const showOrganizationDetailsPage = async (req, res) => {
+    const organizationId = req.params.id;
+    try {
+        const organization = await getOrganization(organizationId);
+        const projects = await getProjectsByOrganizationId(organizationId);
+        const title = organization.name;
+        res.render('organization', { title, organization, projects });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+export {showOrganizationsPage, showOrganizationDetailsPage};
