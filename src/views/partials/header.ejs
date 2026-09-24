@@ -26,3 +26,15 @@
             </ul>
         </div>
     </nav>
+    <% const messages = flash(); %>
+    <% const alertTypes = ['success', 'error', 'warning', 'info']; %>
+    <% Object.keys(messages).forEach(type => { %>
+        <% if (messages[type].length > 0) { %>
+            <% const alertType = alertTypes.includes(type) ? type : 'info'; %>
+            <% messages[type].forEach(msg => { %>
+                <div class="alert alert--<%= alertType %>" role="<%= alertType === 'error' ? 'alert' : 'status' %>" aria-live="polite">
+                    <%= msg %>
+                </div>
+            <% }); %>
+        <% } %>
+    <% }); %>

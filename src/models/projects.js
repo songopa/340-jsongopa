@@ -34,7 +34,7 @@ const getProjectById = async (projectId) => {
     `;
 
     const result = await db.query(query, [projectId]);
-    return result.rows[0];
+    return result.rows[0] ?? null;
 }
 
 const getProjectsByOrganizationId = async (organizationId) => {
@@ -97,7 +97,7 @@ const getProjectDetails = async (projectId) => {
 
     const queryParams = [projectId];
     const result = await db.query(query, queryParams);
-    return result.rows[0];
+    return result.rows[0] ?? null;
 };
 
 const getProjectsByCategoryId = async (categoryId) => {
@@ -143,4 +143,39 @@ const getProjectCategories = async (projectId) => {
     return result.rows;
 };
 
-export { getProjects, getProjectById, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails, getProjectsByCategoryId, getProjectCategories };
+  const createProject = async (title, description, location, date, organizationId) => {
+    const query = `
+      INSERT INTO public.projects (title, description, location, project_date, organization_id)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING project_id;
+    `;
+
+    const result = await db.query(query, [title, description, location, date, organizationId]);
+    return result.rows[0].project_id;
+  };
+
+  const updateProject = async (projectId, title, description, location, date, organizationId) => {
+    const query = `
+      UPDATE public.projects
+      SET title = $1,
+          description = $2,
+          location = $3,
+          project_date = $4,
+          organization_id = $5
+      WHERE project_id = $6;
+    `;
+
+    await db.query(query, [title, description, location, date, organizationId, projectId]);
+  };
+
+  export {
+    getProjects,
+    getProjectById,
+    getProjectsByOrganizationId,
+    getUpcomingProjects,
+    getProjectDetails,
+    getProjectsByCategoryId,
+    getProjectCategories,
+    createProject,
+    updateProject
+  };

@@ -3,6 +3,8 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import {testConnection} from './src/models/db.js';
 import router from './src/routes.js';
+import session from 'express-session';
+import flash from './src/middlewares/flash.js';
 
 
 // Define the application environment
@@ -31,7 +33,16 @@ app.set('view engine', 'ejs');
 // Tell Express where to find your templates
 app.set('views', path.join(__dirname, 'src/views'));
 
+app.use(express.urlencoded({extended:true}));
+app.use(express.json());
 
+const SESSION_SECRET = process.env.SESSION_SECRET || 'default_session_secret';
+app.use(session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60 * 60 * 1000 }
+}));
 
 /**
   * Middlewares
@@ -47,6 +58,8 @@ app.use((req, res, next) => {
     res.locals.NODE_ENV = NODE_ENV;
     next();
 });
+
+app.use(flash);
 
 
 
