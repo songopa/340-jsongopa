@@ -3,6 +3,9 @@ import {
     getUpcomingProjects,
     getProjectDetails,
     getProjectCategories,
+    isUserVolunteeringForProject,
+    addProjectVolunteer,
+    removeProjectVolunteer,
     createProject,
     updateProject
 } from '../models/projects.js';
@@ -55,9 +58,37 @@ const showProjectDetailsPage = async (req, res) => {
 
     try {
         const project = await getProjectDetails(projectId);
+        if (!project) {
+            return res.status(404).render('errors/404', {title: 'Project Not Found'});
+        }
         const categories = await getProjectCategories(projectId);
+        const isVolunteering = req.session?.user
+            ? await isUserVolunteeringForProject(req.session.user.user_id, projectId)
+            : false;
         const title = project.title;
-        res.render('project', { title, project, categories });
+        res.render('project', { title, project, categories, isVolunteering });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+const removeProjectVolunteerSignup = async (req, res) => {
+    try {
+        await removeProjectVolunteer(req.session.user.user_id, req.params.id);
+        req.flash('success', 'You are no longer volunteering for this project.');
+        res.redirect(`/project/${req.params.id}`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+const removeProjectVolunteerFromDashboard = async (req, res) => {
+    try {
+        await removeProjectVolunteer(req.session.user.user_id, req.params.id);
+        req.flash('success', 'You are no longer volunteering for this project.');
+        res.redirect('/dashboard');
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -69,6 +100,17 @@ const showNewProjectForm = async (req, res) => {
         const organizations = await getAllOrganizations();
         const title = 'Add New Service Project';
         res.render('new-project', {title, organizations});
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+const volunteerForProject = async (req, res) => {
+    try {
+        await addProjectVolunteer(req.session.user.user_id, req.params.id);
+        req.flash('success', 'You are now volunteering for this project.');
+        res.redirect(`/project/${req.params.id}`);
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
@@ -140,5 +182,8 @@ export {
     processNewProjectForm,
     projectValidation,
     showEditProjectForm,
-    processEditProjectForm
+    processEditProjectForm,
+    volunteerForProject,
+    removeProjectVolunteerSignup,
+    removeProjectVolunteerFromDashboard
 };

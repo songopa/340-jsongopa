@@ -4,7 +4,7 @@
             <p class="eyebrow">Find your fit</p>
             <h1 id="categories-heading"><%= title %></h1>
             <p class="intro-copy">Explore service opportunities by the kind of impact you want to make.</p>
-            <% if (user && user.role === 'admin') { %>
+            <% if (user && user.role_name === 'admin') { %>
                 <a class="btn btn-primary" href="/new-category">Add New Category</a>
             <% } %>
         </section>
@@ -31,7 +31,7 @@
                                 <th scope="row" data-label="Category"><%= category.name %></th>
                                 <td data-label="Selection">
                                     <a class="btn btn-primary" href="/category/<%= category.category_id %>">View Projects</a>
-                                    <% if (user && user.role === 'admin') { %>
+                                    <% if (user && user.role_name === 'admin') { %>
                                         <a class="btn btn-primary" href="/edit-category/<%= category.category_id %>">Edit Category</a>
                                     <% } %>
                                 </td>

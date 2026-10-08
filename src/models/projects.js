@@ -143,6 +143,55 @@ const getProjectCategories = async (projectId) => {
     return result.rows;
 };
 
+const isUserVolunteeringForProject = async (userId, projectId) => {
+    const query = `
+        SELECT 1
+        FROM public.project_volunteers
+        WHERE user_id = $1 AND project_id = $2;
+      `;
+
+    const result = await db.query(query, [userId, projectId]);
+    return result.rowCount > 0;
+};
+
+const addProjectVolunteer = async (userId, projectId) => {
+    const query = `
+        INSERT INTO public.project_volunteers (user_id, project_id)
+        VALUES ($1, $2)
+        ON CONFLICT (user_id, project_id) DO NOTHING;
+      `;
+
+    await db.query(query, [userId, projectId]);
+};
+
+const removeProjectVolunteer = async (userId, projectId) => {
+    const query = `
+        DELETE FROM public.project_volunteers
+        WHERE user_id = $1 AND project_id = $2;
+      `;
+
+    await db.query(query, [userId, projectId]);
+};
+
+const getVolunteerProjects = async (userId) => {
+    const query = `
+        SELECT
+          p.project_id,
+          p.title,
+          p.project_date,
+          p.location,
+          o.name AS organization_name
+        FROM public.project_volunteers AS pv
+        JOIN public.projects AS p ON p.project_id = pv.project_id
+        JOIN public.organizations AS o ON o.organization_id = p.organization_id
+        WHERE pv.user_id = $1
+        ORDER BY p.project_date;
+      `;
+
+    const result = await db.query(query, [userId]);
+    return result.rows;
+};
+
   const createProject = async (title, description, location, date, organizationId) => {
     const query = `
       INSERT INTO public.projects (title, description, location, project_date, organization_id)
@@ -176,6 +225,10 @@ const getProjectCategories = async (projectId) => {
     getProjectDetails,
     getProjectsByCategoryId,
     getProjectCategories,
+    isUserVolunteeringForProject,
+    addProjectVolunteer,
+    removeProjectVolunteer,
+    getVolunteerProjects,
     createProject,
     updateProject
   };

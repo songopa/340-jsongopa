@@ -1,14 +1,60 @@
 <%- include('partials/header') %>
-<main>
-    <h1><%= title %></h1>
-    
-     <p>Name: <%= name %></p>
-    <p>Email: <%= email %></p>
+<main class="content-page dashboard-page">
+    <% const volunteerProjectList = typeof volunteerProjects === 'undefined' ? [] : volunteerProjects; %>
+    <section class="detail-hero detail-hero--with-action" aria-labelledby="dashboard-heading">
+        <div class="detail-hero__content">
+            <p class="eyebrow">Volunteer portal</p>
+            <h1 id="dashboard-heading"><%= title %></h1>
+            <p class="intro-copy">Welcome back, <strong><%= name %></strong>.</p>
+        </div>
+        <aside class="action-panel" aria-label="Account information">
+            <p class="eyebrow">Your account</p>
+            <h2><%= name %></h2>
+            <p><%= email %></p>
+            <% if (user && user.role_name === 'admin') { %>
+                <a class="btn btn-primary" href="/users">Registered Users</a>
+            <% } %>
+        </aside>
+    </section>
 
-    <% if (user && user.role === 'admin') { %>
-        <a class="btn btn-primary" href="/users">Registered Users</a>
-    <% } %>
-
-    <a class="btn btn-secondary" href="/logout">Logout</a>
+    <section class="dashboard-projects" aria-labelledby="volunteer-projects-heading">
+        <div class="section-heading section-heading--actions">
+            <h2 id="volunteer-projects-heading">Projects I Am Volunteering For</h2>
+            <p class="content-count"><strong><%= volunteerProjectList.length %></strong> signups</p>
+        </div>
+        <% if (volunteerProjectList.length > 0) { %>
+            <div class="table-wrapper">
+                <table class="data-table" aria-describedby="volunteer-projects-heading">
+                    <caption class="visually-hidden">Projects you have signed up to volunteer for</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Project</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Organization</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% volunteerProjectList.forEach(project => { %>
+                            <tr>
+                                <th scope="row" data-label="Project">
+                                    <a href="/project/<%= project.project_id %>"><%= project.title %></a>
+                                </th>
+                                <td data-label="Date"><%= project.project_date.toDateString() %></td>
+                                <td data-label="Location"><%= project.location %></td>
+                                <td data-label="Organization"><%= project.organization_name %></td>
+                                <td data-label="Action">
+                                    <a class="text-link" href="/dashboard/project/<%= project.project_id %>/remove-volunteer">Remove signup</a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <p class="empty-state">You have not signed up for a project yet. <a class="text-link" href="/projects">Browse service projects</a>.</p>
+        <% } %>
+    </section>
 </main>
 <%- include('partials/footer') %>

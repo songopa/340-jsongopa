@@ -9,7 +9,10 @@ import {
     processNewProjectForm,
     projectValidation,
     showEditProjectForm,
-    processEditProjectForm
+    processEditProjectForm,
+    volunteerForProject,
+    removeProjectVolunteerSignup,
+    removeProjectVolunteerFromDashboard
 } from './controllers/projectController.js';
 import {
     showCategoriesPage,
@@ -58,11 +61,14 @@ router.post('/login', loginValidation, processLoginForm);
 router.get('/logout', processLogout);
 
 router.get('/dashboard', requireLogin, showDashboard);
+router.get('/dashboard/project/:id/remove-volunteer', requireLogin, removeProjectVolunteerFromDashboard);
 
 router.get('/users', requireRole('admin'), showUsersPage);
 
 router.get('/projects', showProjectsPage);
 router.get('/project/:id', showProjectDetailsPage);
+router.get('/project/:id/volunteer', requireLogin, volunteerForProject);
+router.get('/project/:id/remove-volunteer', requireLogin, removeProjectVolunteerSignup);
 router.get('/project/:projectId/assign-categories', requireRole('admin'), showAssignCategoriesForm);
 router.post('/project/:projectId/assign-categories', requireRole('admin'), processAssignCategoriesForm);
 router.get('/new-project', requireRole('admin'), showNewProjectForm);

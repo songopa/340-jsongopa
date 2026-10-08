@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { createUser, authenticateUser, getAllUsers } from '../models/users.js';
+import { getVolunteerProjects } from '../models/projects.js';
 import { body, validationResult } from 'express-validator';
 
 const userValidation = [
@@ -96,16 +97,31 @@ const processLoginForm = async (req, res) => {
 }
 
 const processLogout = (req, res) => {
-    if (res.session && res.session.user) {
-        req.session.destroy();
-    }
-    req.flash('success', 'You have been logged out.');
-    res.redirect('/');
+    req.session.destroy((error) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).send('Unable to log out. Please try again.');
+        }
+
+        res.clearCookie('connect.sid');
+        res.redirect('/');
+    });
 }
 
-const showDashboard = (req, res) => {
+const showDashboard = async (req, res) => {
     const user = req.session.user;
-    res.render('dashboard', { title: 'Dashboard', name: user.name, email: user.email });
+    try {
+        const volunteerProjects = await getVolunteerProjects(user.user_id);
+        res.render('dashboard', {
+            title: 'Dashboard',
+            name: user.name,
+            email: user.email,
+            volunteerProjects
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 const showUsersPage = async (req, res) => {

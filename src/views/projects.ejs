@@ -3,7 +3,7 @@
         <section class="page-intro" aria-labelledby="projects-heading">
             <p class="eyebrow">Make an impact locally</p>
             <h1 id="projects-heading"><%= title %></h1>
-            <% if (user && user.role === 'admin') { %>
+            <% if (user && user.role_name === 'admin') { %>
                 <a class="btn btn-primary" href="/new-project">Add New Service Project</a>
             <% } %>
         </section>

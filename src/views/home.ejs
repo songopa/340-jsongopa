@@ -8,7 +8,9 @@
             <p class="intro-copy">Our mission is to promote service across the world by connecting volunteers with service opportunities in their community.</p>
         </section>
         <section class="page-cta">
-            <a class="btn btn-primary" href="/dashboard">My Dashboard</a>
+            <% if (isLoggedIn) { %>
+                <a class="btn btn-primary" href="/dashboard">My Dashboard</a>
+            <% } %>
         </section>
     </main>
     <%- include('partials/footer') %>

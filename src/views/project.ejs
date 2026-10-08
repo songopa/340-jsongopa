@@ -1,47 +1,64 @@
 <%- include('partials/header') %>
     <main class="content-page project-page">
-        <section class="page-intro" aria-labelledby="project-heading">
-            <p class="eyebrow">Service project</p>
-            <h1 id="project-heading"><%= project.title %></h1>
-            <p class="intro-copy"><%= project.description %></p>
-            <a class="btn btn-primary" href="/edit-project/<%= project.project_id %>">Edit Project</a>
-            <div>
-                <dt>
-                    <span class="content-label">Location</span>
-                    <dd><%= project.location %></dd>
-                </dt>
-                <dt>
-                    <span class="content-label">Date</span>
-                    <dd><%= project.project_date.toDateString() %></dd>
-                </dt>
-                <dt>
-                    <span class="content-label">Partner Organization</span>
-                    <dd>
-                        <a href="/organization/<%= project.organization_id %>" class="btn btn--secondary">
-                            <%= project.organization_name %>
-                        </a>
-                    </dd>
-                </dt>
+        <section class="detail-hero <%= isLoggedIn ? 'detail-hero--with-action' : '' %>" aria-labelledby="project-heading">
+            <div class="detail-hero__content">
+                <p class="eyebrow">Service opportunity</p>
+                <h1 id="project-heading"><%= project.title %></h1>
+                <p class="intro-copy"><%= project.description %></p>
             </div>
-            <div>
-                <dt>
-                    <span class="content-label">Categories</span>
-                    <% if (user && user.role === 'admin') { %>
-                        <a class="btn btn-primary" href="/project/<%= project.project_id %>/assign-categories">Assign Categories</a>
+
+            <% if (isLoggedIn) { %>
+                <aside class="action-panel" aria-label="Volunteer signup">
+                    <p class="eyebrow">Get involved</p>
+                    <% if (isVolunteering) { %>
+                        <h2>You are on the volunteer list</h2>
+                        <p class="action-panel__status" role="status">Your signup is confirmed.</p>
+                        <a class="btn btn-secondary" href="/project/<%= project.project_id %>/remove-volunteer">Remove my signup</a>
+                    <% } else { %>
+                        <h2>Ready to help?</h2>
+                        <p>Join this service project as a volunteer.</p>
+                        <a class="btn btn-primary" href="/project/<%= project.project_id %>/volunteer">Volunteer for this project</a>
                     <% } %>
-                    <dd>
-                        <% if (categories.length > 0) { %>
-                            <% categories.forEach(category => { %>
-                                <a href="/category/<%= category.category_id %>" class="btn btn--secondary">
-                                    <%= category.name %>
-                                </a>
-                            <% }); %>
-                        <% } else { %>
-                            <p class="empty-state">This project does not have any categories listed yet.</p>
-                        <% } %>
-                    </dd>
-                </dt>
+                </aside>
+            <% } %>
+        </section>
+
+        <section class="metadata-section" aria-label="Project details">
+            <dl class="metadata-grid">
+                <div>
+                    <dt>Date</dt>
+                    <dd><%= project.project_date.toDateString() %></dd>
+                </div>
+                <div>
+                    <dt>Location</dt>
+                    <dd><%= project.location %></dd>
+                </div>
+                <div>
+                    <dt>Partner organization</dt>
+                    <dd><a class="text-link" href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a></dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="project-categories" aria-labelledby="project-categories-heading">
+            <div class="section-heading section-heading--actions">
+                <h2 id="project-categories-heading">Project categories</h2>
+                <% if (user && user.role_name === 'admin') { %>
+                    <div class="section-actions">
+                        <a class="btn btn-secondary" href="/edit-project/<%= project.project_id %>">Edit project</a>
+                        <a class="btn btn-primary" href="/project/<%= project.project_id %>/assign-categories">Manage categories</a>
+                    </div>
+                <% } %>
             </div>
+            <% if (categories.length > 0) { %>
+                <div class="tag-list">
+                    <% categories.forEach(category => { %>
+                        <a class="tag" href="/category/<%= category.category_id %>"><%= category.name %></a>
+                    <% }); %>
+                </div>
+            <% } else { %>
+                <p class="empty-state">No categories have been added to this project yet.</p>
+            <% } %>
         </section>
     </main>
     <%- include('partials/footer') %>

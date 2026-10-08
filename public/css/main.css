@@ -202,6 +202,148 @@ main > p {
     margin-bottom: 1rem;
 }
 
+.detail-hero {
+    display: grid;
+    align-items: center;
+    gap: 2.5rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.detail-hero--with-action {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 21rem);
+}
+
+.detail-hero__content {
+    min-width: 0;
+}
+
+.detail-hero__content h1 {
+    max-width: 22ch;
+    overflow-wrap: anywhere;
+}
+
+.detail-hero__content .intro-copy {
+    max-width: 58ch;
+}
+
+.action-panel {
+    padding: 1.35rem;
+    border-left: 4px solid var(--teal);
+    background: #e7f2f0;
+}
+
+.action-panel .eyebrow {
+    margin-bottom: 0.45rem;
+}
+
+.action-panel h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.action-panel p:not(.eyebrow) {
+    margin: 0 0 0.7rem;
+}
+
+.action-panel .btn {
+    display: block;
+    margin: 0.75rem 0 0;
+    text-align: center;
+}
+
+.action-panel__status {
+    color: var(--teal-dark);
+    font-weight: 700;
+}
+
+.metadata-section {
+    margin: 2rem 0 2.75rem;
+}
+
+.metadata-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    column-gap: 1.25rem;
+    margin: 0;
+    border-top: 3px solid var(--navy);
+    border-bottom: 1px solid var(--line);
+}
+
+.metadata-grid > div {
+    min-width: 0;
+    padding: 1rem 0 1.1rem;
+}
+
+.metadata-grid dt {
+    margin-bottom: 0.35rem;
+    color: var(--muted-ink);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.metadata-grid dd {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.text-link {
+    color: var(--teal-dark);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.section-heading--actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+}
+
+.section-heading--actions h2 {
+    margin: 0;
+    white-space: normal;
+}
+
+.section-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.section-actions .btn {
+    margin: 0;
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin: 1rem 0;
+}
+
+.tag {
+    display: inline-flex;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 0.3rem;
+    color: var(--teal-dark);
+    background: var(--surface);
+    font-weight: 700;
+}
+
+.tag:hover {
+    border-color: var(--teal);
+    color: var(--navy);
+}
+
 .intro-copy {
     max-width: 52rem;
     margin: 0;
@@ -669,6 +811,13 @@ footer p {
     border-color: #bee5eb;
 }
 
+/* flex display on large screens, but stack on smaller screens */
+.d-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
 
 @media (max-width: 42rem) {
     .nav-inner {
@@ -708,6 +857,11 @@ footer p {
 
     .content-card {
         padding: 1rem;
+    }
+
+    .detail-hero--with-action {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .form-row {

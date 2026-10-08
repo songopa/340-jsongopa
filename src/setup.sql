@@ -275,3 +275,9 @@ CREATE TABLE IF NOT EXISTS users (
 INSERT INTO roles (role_name, role_description) VALUES 
     ('user', 'Standard user with basic access'),
     ('admin', 'Administrator with full system access');
+
+CREATE TABLE IF NOT EXISTS project_volunteers (
+    user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    project_id INTEGER NOT NULL REFERENCES projects(project_id) ON DELETE CASCADE,
+    PRIMARY KEY (user_id, project_id)
+);

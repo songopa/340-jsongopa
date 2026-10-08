@@ -1,14 +1,20 @@
 <%- include('partials/header') %>
     <main class="content-page organization-page">
-        <section class="page-intro" aria-labelledby="organization-heading">
-            <p class="eyebrow">Partner organization</p>
-            <div class="page-header">
-                <img class="organization-logo" src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
-                <h1 id="organization-heading"><%= organization.name %></h1>
+        <section class="detail-hero <%= user && user.role_name === 'admin' ? 'detail-hero--with-action' : '' %>" aria-labelledby="organization-heading">
+            <div class="detail-hero__content">
+                <p class="eyebrow">Partner organization</p>
+                <div class="page-header">
+                    <img class="organization-logo" src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
+                    <h1 id="organization-heading"><%= organization.name %></h1>
+                </div>
+                <p class="intro-copy"><%= organization.description %></p>
             </div>
-            <p class="intro-copy"><%= organization.description %></p>
-            <% if (user && user.role === 'admin') { %>
-                <a class="btn btn-primary" href="/edit-organization/<%= organization.organization_id %>">Edit Organization</a>
+            <% if (user && user.role_name === 'admin') { %>
+                <aside class="action-panel" aria-label="Organization actions">
+                    <p class="eyebrow">Partner tools</p>
+                    <h2>Manage organization</h2>
+                    <a class="btn btn-primary" href="/edit-organization/<%= organization.organization_id %>">Edit organization</a>
+                </aside>
             <% } %>
         </section>
 
