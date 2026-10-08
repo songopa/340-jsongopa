@@ -26,7 +26,9 @@
             <div>
                 <dt>
                     <span class="content-label">Categories</span>
-                    <a class="btn btn-primary" href="/project/<%= project.project_id %>/assign-categories">Assign Categories</a>
+                    <% if (user && user.role === 'admin') { %>
+                        <a class="btn btn-primary" href="/project/<%= project.project_id %>/assign-categories">Assign Categories</a>
+                    <% } %>
                     <dd>
                         <% if (categories.length > 0) { %>
                             <% categories.forEach(category => { %>

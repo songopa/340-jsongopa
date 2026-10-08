@@ -7,7 +7,9 @@
                 <h1 id="organization-heading"><%= organization.name %></h1>
             </div>
             <p class="intro-copy"><%= organization.description %></p>
-            <a class="btn btn-primary" href="/edit-organization/<%= organization.organization_id %>">Edit Organization</a>
+            <% if (user && user.role === 'admin') { %>
+                <a class="btn btn-primary" href="/edit-organization/<%= organization.organization_id %>">Edit Organization</a>
+            <% } %>
         </section>
 
         <section aria-labelledby="projects-heading">

@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<main class="content-page">
+    <h1><%= title %></h1>
+    <a class="btn btn-primary" href="/new-user">Add User</a>
+    <table class="data-table">
+        <caption class="visually-hidden">Registered Users</caption>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email(username)</th>
+                <th scope="col">Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach((user, index) => { %>
+                <tr>
+                    <td data-label="ID"><%= index + 1 %></td>
+                    <td data-label="Name"><%= user.name %></td>
+                    <td data-label="Email"><%= user.email %></td>
+                    <td data-label="Role"><%= user.role_name %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</main>
+<%- include('partials/footer') %>

@@ -24,8 +24,17 @@
                 <li><a href="/projects" class="<%= currentPath === '/projects' ? 'active' : '' %>" <%= currentPath === '/projects' ? 'aria-current="page"' : '' %>>Projects</a></li>
                 <li><a href="/categories" class="<%= currentPath === '/categories' ? 'active' : '' %>" <%= currentPath === '/categories' ? 'aria-current="page"' : '' %>>Categories</a></li>
             </ul>
+            <div class="nav-right">
+                <% if (isLoggedIn) { %>
+                    <a href="/logout" class="<%= currentPath === '/logout' ? 'active' : '' %>" <%= currentPath === '/logout' ? 'aria-current="page"' : '' %>>Logout</a>
+                <% } else { %>
+                    <a href="/login" class="<%= currentPath === '/login' ? 'active' : '' %>" <%= currentPath === '/login' ? 'aria-current="page"' : '' %>>Login</a>
+                    <a href="/register" class="<%= currentPath === '/register' ? 'active' : '' %>" <%= currentPath === '/register' ? 'aria-current="page"' : '' %>>Register</a>
+                <% } %>
+            </div>
         </div>
     </nav>
+    
     <% const messages = flash(); %>
     <% const alertTypes = ['success', 'error', 'warning', 'info']; %>
     <% Object.keys(messages).forEach(type => { %>
@@ -38,3 +47,18 @@
             <% }); %>
         <% } %>
     <% }); %>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flashMessages = document.querySelectorAll('.alert');
+            if (flashMessages.length > 0) {
+                setTimeout(() => {
+                    flashMessages.forEach(msg => msg.remove());
+                }, 5000);
+            }
+        });
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('alert')) {
+                e.target.remove();
+            }
+        });
+    </script>

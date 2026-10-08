@@ -115,6 +115,12 @@ nav a.active {
     color: #ffffff;
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 main {
     width: min(100% - 2rem, 66rem);
     flex: 1;

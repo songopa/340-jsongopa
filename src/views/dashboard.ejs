@@ -1,0 +1,14 @@
+<%- include('partials/header') %>
+<main>
+    <h1><%= title %></h1>
+    
+     <p>Name: <%= name %></p>
+    <p>Email: <%= email %></p>
+
+    <% if (user && user.role === 'admin') { %>
+        <a class="btn btn-primary" href="/users">Registered Users</a>
+    <% } %>
+
+    <a class="btn btn-secondary" href="/logout">Logout</a>
+</main>
+<%- include('partials/footer') %>
